@@ -11,6 +11,47 @@
         This can complicate debugging.
         You can disable it by setting `parallel_runs=False` in the last line.
 """
+from collections import Counter
+
+def load_wordlist(file_path):
+    with open(file_path, 'r') as file:
+        words = file.read().splitlines()
+    return [word.upper() for word in words if '-' not in word and ' ' not in word]
+
+
+# def update_possible_words(words, feedback, guesses):
+#     possible_words = []
+#     for word in words:
+#         if len(word) != len(feedback):
+#             continue
+#         # if word in guesses:
+#         #     continue
+#         match = True
+#         for i, char in enumerate(feedback):
+#             if char != '-' and char != word[i]:
+#                 match = False
+#                 break
+#             if char == '-' and word[i] in guesses:
+#                 match = False
+#                 break
+#         if match:
+#             possible_words.append(word)
+#     return possible_words
+
+
+def calculate_letter_frequency(possible_words, guesses):
+    letter_frequencies = Counter()
+    for word in possible_words:
+        for letter in set(word):
+            if letter not in guesses:
+                letter_frequencies[letter] += 1
+
+    most_common_letter = letter_frequencies.most_common(1)
+    if most_common_letter:
+        return most_common_letter[0][0]
+    else:
+        return None
+
 
 
 def agent_function(request_data, request_info):
@@ -20,9 +61,42 @@ def agent_function(request_data, request_info):
     print('I got the following request:')
     print(request_data)
 
+    word_list = load_wordlist("wordlist.txt")
+
+    feedback = request_data["feedback"]
+    guesses = request_data["guesses"]
+
+    possible_words = []
+
+    for word in word_list:
+        if word not in guesses:
+            if len(word) == len(feedback):
+                for i, char in enumerate(feedback):
+                    if char != "-" and word[i] == char:
+                        possible_words.append(word)
+                    elif char == "-" and word[i] not in guesses:
+                        possible_words.append(word)
 
 
-    return 'APPLE'      # most of the time this will be wrong
+    if len(possible_words) < 3:
+        return possible_words[0]
+    else:
+        most_frequent_letter = calculate_letter_frequency(possible_words, guesses)
+        return most_frequent_letter
+
+
+
+
+    # possible_words = update_possible_words(word_list, feedback, guesses)
+    #
+    # if len(possible_words) <= 3:
+    #     return possible_words[0].upper()
+    #     # return "executive".upper()
+    #
+    # most_frequent_letter = calculate_letter_frequency(possible_words, guesses)
+    # return most_frequent_letter.upper()
+
+
 
 
 if __name__ == '__main__':
