@@ -105,5 +105,5 @@ Here is a diagram to visualize the process better:
 
 
 
-![GuessTheWord.jpg](..%2F..%2F..%2FDownloads%2FGuessTheWord.jpg)
+![GuessTheWord.jpg](GuessTheWord.jpg)
 
