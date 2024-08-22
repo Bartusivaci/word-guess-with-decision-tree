@@ -1,7 +1,7 @@
 """
     To use this implementation, you simply have to implement `agent_function` such that it returns a legal action.
     You can then let your agent compete on the server by calling
-        python3 simple.py path/to/your/config.json
+        python3 advanced.py path/to/your/config.json
 
     You can interrupt the script at any time.
     The server will remember the actions you have sent.
@@ -12,7 +12,6 @@
         You can disable it by setting `parallel_runs=False` in the last line.
 """
 from collections import Counter
-import math
 
 
 def load_wordlist(file_path):
