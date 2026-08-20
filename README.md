@@ -1,6 +1,6 @@
-# Repository for ss24.2.4/team953
+# Repository for AI Project 2.4
 
-**Topic:** SS24 Assignment 2.4: Guess the Word 
+**Topic:** SS24 Assignment 2.4: [Guess the Word](https://kwarc.info/teaching/AISysProj/SS24/assignment-2.4.pdf) 
 
 ## Dependencies
 
